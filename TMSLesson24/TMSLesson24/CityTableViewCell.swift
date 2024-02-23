@@ -12,15 +12,17 @@ class CityTableViewCell: UITableViewCell {
     @IBOutlet weak var currentTitleLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var timeZoneLabel: UILabel!
+    @IBOutlet weak var currentDateLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.contentView.backgroundColor = .darkGray
     }
     
-    func configure(city: City, currentTime: String, timeZone: String) {
+    func configure(city: City, currentTime: String, currentDate: String, timeZone: String) {
         titleLabel.text = city.name
         currentTitleLabel.text = currentTime
+        currentDateLabel.text  = currentDate
         timeZoneLabel.text = timeZone
     }
 }

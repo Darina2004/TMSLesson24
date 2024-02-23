@@ -9,5 +9,8 @@ import Foundation
 
 struct City {
     let name: String
-    let timeZone: TimeZone    
+    let timeZoneIdentifier: String
+    var timeZone: TimeZone? {
+        return TimeZone(identifier: timeZoneIdentifier)
+    }
 }

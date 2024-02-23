@@ -9,6 +9,25 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    enum Constants {
+        static let tableViewHeightForRowAt:CGFloat = 100
+        
+        static let newYork = "America/New_York"
+        static let london = "Europe/London"
+        static let tokyo = "Asia/Tokyo"
+        static let minsk = "Europe/Minsk"
+        static let berlin = "Europe/Berlin"
+        static let warsaw = "Europe/Warsaw"
+        static let paris = "Europe/Paris"
+        
+        static let title = "World Clock"
+        static let tableViewCellIdentifier = "CityTableViewCell"
+        
+        static let apiKey = "522b0bbb38f54265b2a379e229f0321a"
+        static let baseURL = "https://api.opencagedata.com/geocode/v1/json"
+        
+    }
+    
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -20,40 +39,50 @@ class ViewController: UIViewController {
     var cities: [City] = []
     
     let dateFormatter = DateFormatter()
+    let dateFormatterDate = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "World Clock"
+        title = Constants.title
         
-        let newYorkTimeZone = TimeZone(identifier: "America/New_York")
-        let londonTimeZone = TimeZone(identifier: "Europe/London")
-        let tokyoTimeZone = TimeZone(identifier: "Asia/Tokyo")
-        let minskTimeZone = TimeZone(identifier: "Europe/Minsk")
-        let berlinTimeZone = TimeZone(identifier: "Europe/Berlin")
-        let warsawTimeZone = TimeZone(identifier: "Europe/Warsaw")
-        let parisTimeZone = TimeZone(identifier: "Europe/Paris")
+        _ = "America/New_York"
+        _ = "Europe/London"
+        _ = "Asia/Tokyo"
+        _ = "Europe/Minsk"
+        _ = "Europe/Berlin"
+        _ = "Europe/Warsaw"
+        _ = "Europe/Paris"
         
-        if let newYorkTimeZone = newYorkTimeZone, let londonTimeZone = londonTimeZone, let tokyoTimeZone = tokyoTimeZone, let minskTimeZone = minskTimeZone, let berlinTimeZone = berlinTimeZone, let warsawTimeZone = warsawTimeZone, let parisTimeZone = parisTimeZone {
+        if let newYorkTimeZone = TimeZone(identifier: Constants.newYork),
+           let londonTimeZone = TimeZone(identifier: Constants.london),
+           let tokyoTimeZone = TimeZone(identifier: Constants.tokyo),
+           let minskTimeZone = TimeZone(identifier: Constants.minsk),
+           let berlinTimeZone = TimeZone(identifier: Constants.berlin),
+           let warsawTimeZone = TimeZone(identifier: Constants.warsaw),
+           let parisTimeZone = TimeZone(identifier: Constants.paris) {
+            
             let cities = [
-                City(name: "New-York", timeZone: newYorkTimeZone),
-                City(name: "London", timeZone: londonTimeZone),
-                City(name: "Tokyo", timeZone: tokyoTimeZone),
-                City(name: "Minsk", timeZone: minskTimeZone),
-                City(name: "Berlin", timeZone: berlinTimeZone),
-                City(name: "Warsaw", timeZone: warsawTimeZone),
-                City(name: "Paris", timeZone: parisTimeZone)
+                City(name: "New-York", timeZoneIdentifier: Constants.newYork),
+                City(name: "London", timeZoneIdentifier: Constants.london),
+                City(name: "Tokyo", timeZoneIdentifier: Constants.tokyo),
+                City(name: "Minsk", timeZoneIdentifier: Constants.minsk),
+                City(name: "Berlin", timeZoneIdentifier: Constants.berlin),
+                City(name: "Warsaw", timeZoneIdentifier: Constants.warsaw),
+                City(name: "Paris", timeZoneIdentifier: Constants.paris)
             ]
             self.cities = cities
         } else {
             print("Ошибка при инициализации часовых поясов.")
         }
+        
         dateFormatter.dateFormat = "HH:mm:ss"
+        dateFormatterDate.dateFormat = "d MMM"
         
         setupNavigation()
         setupTableView()
     }
     
-    func setupNavigation() {
+   private func setupNavigation() {
         let plusButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         navigationItem.rightBarButtonItem = plusButton
     }
@@ -67,12 +96,19 @@ class ViewController: UIViewController {
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor)
         ])
-        tableView.register(UINib(nibName: "CityTableViewCell", bundle: nil), forCellReuseIdentifier: "CityTableViewCell")
+        tableView.register(UINib(nibName: Constants.tableViewCellIdentifier, bundle: nil), forCellReuseIdentifier: Constants.tableViewCellIdentifier)
         tableView.reloadData()
     }
     
     @objc func addButtonTapped() {
+        let citySearchViewController = CitySearchViewController()
+        citySearchViewController.delegate = self
         
+        navigationController?.pushViewController(citySearchViewController, animated: true)
+    }
+    
+   private func searchCity(_ cityName: String) {
+        print("Вы ищете город: \(cityName)")
     }
 }
 
@@ -80,20 +116,52 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cities.count
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CityTableViewCell", for: indexPath) as! CityTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.tableViewCellIdentifier, for: indexPath) as! CityTableViewCell
         let city = cities[indexPath.row]
-        dateFormatter.timeZone = city.timeZone
-        let currentTime = dateFormatter.string(from: Date())
-        let timeZoneOffset = city.timeZone.secondsFromGMT()
-        let timeZoneString = "UTC \(timeZoneOffset > 0 ? "+" : "")\(timeZoneOffset / 3600)"
-        cell.configure(city: city, currentTime: currentTime, timeZone: timeZoneString)
+        
+        if let timeZone = city.timeZone {
+            dateFormatter.timeZone = timeZone
+            let currentTime = dateFormatter.string(from: Date())
+            let currentDate = dateFormatterDate.string(from: Date())
+            
+            let timeZoneOffset = timeZone.secondsFromGMT()
+            let timeZoneString = "UTC\(timeZoneOffset > 0 ? "+" : "")\(timeZoneOffset / 3600),"
+            
+            cell.configure(city: city, currentTime: currentTime, currentDate: currentDate, timeZone: timeZoneString)
+        } else {
+            print("Time zone is nil for city: \(city.name)")
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return Constants.tableViewHeightForRowAt
     }
 }
+
+extension ViewController: CitySearchViewControllerDelegate {
+    func didEnterCityName(_ cityName: String) {
+           NetworkService.fetchCityDetails(for: cityName) { result, error in
+               if let error = error {
+                   print("Ошибка: \(error)")
+                   return
+               }
+               
+               if let cityDetails = result?.results.first {
+                   let timezone = cityDetails.annotations.timezone.name
+                   print("Часовой пояс города \(cityName): \(timezone)")
+                   
+                   let newCity = City(name: cityName, timeZoneIdentifier: timezone)
+                   self.cities.append(newCity)
+                   
+                   DispatchQueue.main.async {
+                       self.tableView.reloadData()
+                   }
+               } else {
+                   print("Информация о часовом поясе не найдена.")
+               }
+           }
+       }
+   }

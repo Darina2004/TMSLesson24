@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0490E78C2B8809F00088A3EA /* CitySearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490E78B2B8809F00088A3EA /* CitySearchViewController.swift */; };
+		0490E78E2B882B610088A3EA /* ResultModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490E78D2B882B610088A3EA /* ResultModel.swift */; };
+		0490E7902B8837790088A3EA /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0490E78F2B8837790088A3EA /* NetworkService.swift */; };
 		04B9E8772B86892700223404 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B9E8762B86892700223404 /* AppDelegate.swift */; };
 		04B9E8792B86892700223404 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B9E8782B86892700223404 /* SceneDelegate.swift */; };
 		04B9E87B2B86892700223404 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B9E87A2B86892700223404 /* ViewController.swift */; };
@@ -19,10 +22,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0490E78B2B8809F00088A3EA /* CitySearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CitySearchViewController.swift; sourceTree = "<group>"; };
+		0490E78D2B882B610088A3EA /* ResultModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultModel.swift; sourceTree = "<group>"; };
+		0490E78F2B8837790088A3EA /* NetworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		04B9E8732B86892700223404 /* TMSLesson24.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMSLesson24.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04B9E8762B86892700223404 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04B9E8782B86892700223404 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		04B9E87A2B86892700223404 /* ViewController.swift */ = {isa = PBXFileReference; indentWidth = 36; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		04B9E87A2B86892700223404 /* ViewController.swift */ = {isa = PBXFileReference; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; wrapsLines = 1; };
 		04B9E87F2B86892800223404 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04B9E8822B86892800223404 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04B9E8842B86892800223404 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -64,13 +70,16 @@
 			children = (
 				04B9E8762B86892700223404 /* AppDelegate.swift */,
 				04B9E8782B86892700223404 /* SceneDelegate.swift */,
+				0490E78B2B8809F00088A3EA /* CitySearchViewController.swift */,
+				04B9E88E2B86CBB900223404 /* CityTableViewCell.swift */,
+				04B9E88F2B86CBB900223404 /* CityTableViewCell.xib */,
 				04B9E87A2B86892700223404 /* ViewController.swift */,
+				0490E78D2B882B610088A3EA /* ResultModel.swift */,
 				04B9E88A2B86895D00223404 /* City.swift */,
+				0490E78F2B8837790088A3EA /* NetworkService.swift */,
 				04B9E8942B86DF9100223404 /* Main.storyboard */,
 				04B9E87F2B86892800223404 /* Assets.xcassets */,
 				04B9E8812B86892800223404 /* LaunchScreen.storyboard */,
-				04B9E88E2B86CBB900223404 /* CityTableViewCell.swift */,
-				04B9E88F2B86CBB900223404 /* CityTableViewCell.xib */,
 				04B9E8842B86892800223404 /* Info.plist */,
 			);
 			path = TMSLesson24;
@@ -150,9 +159,12 @@
 			files = (
 				04B9E87B2B86892700223404 /* ViewController.swift in Sources */,
 				04B9E8772B86892700223404 /* AppDelegate.swift in Sources */,
+				0490E7902B8837790088A3EA /* NetworkService.swift in Sources */,
 				04B9E8902B86CBB900223404 /* CityTableViewCell.swift in Sources */,
 				04B9E88B2B86895D00223404 /* City.swift in Sources */,
 				04B9E8792B86892700223404 /* SceneDelegate.swift in Sources */,
+				0490E78E2B882B610088A3EA /* ResultModel.swift in Sources */,
+				0490E78C2B8809F00088A3EA /* CitySearchViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
